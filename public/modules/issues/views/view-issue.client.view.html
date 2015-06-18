@@ -1,0 +1,79 @@
+<section data-ng-controller="IssuesController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1>{{ issue.title }}</h1>
+		<h4>Issue #{{ issue.shortId }}</h4>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<h4 data-ng-bind="issue.user.username"></h4>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p class="panel-title"><strong>{{ issue.user.username }}</strong> <small>created on {{ issue.created | date:'mediumDate' }}</small></p>
+				</div>
+				<div class="panel-body">
+					<p ng-bind-html="issue.content"></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="pull-right" data-ng-show="issue.status === 'open' && (authentication.user._id === issue.user._id || admin)" title="Close this issue">
+				<a class="btn btn-danger" href="#" data-ng-click="close()">
+					<i class="glyphicon glyphicon-eye-close"></i>
+				</a>
+			</div>
+			<div class="pull-right" data-ng-show="issue.status === 'closed' && (authentication.user._id === issue.user._id || admin)" title="Re-open this issue">
+				<a class="btn btn-success" href="#" data-ng-click="open()">
+					<i class="glyphicon glyphicon-eye-open"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+	</div>
+	<div class="row" ng-repeat="comment in comments">
+		<div class="col-md-2">
+			<h4 data-ng-bind="comment.user.username"></h4>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p class="panel-title"><strong>{{ comment.user.username }}</strong> <small>commented on {{ comment.created | date:'mediumDate' }}</small></p>
+				</div>
+				<div class="panel-body">
+					<p ng-bind-html="comment.content"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+	</div>
+	<div class="row" data-ng-show="issue.status === 'open'">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<form name="issueForm" class="form-horizontal" data-ng-submit="createComment(commentForm.$valid)" novalidate>
+				<fieldset>
+					<div class="form-group" ng-class="{ 'has-error' : submitted && commentForm.content.$invalid}">
+						<label class="control-label" for="content">Leave a comment</label>
+						<div class="controls">
+							<div text-angular="" data-ng-model="commentContent" id="summary"></div>
+						</div>
+						<div ng-show="submitted && commentForm.content.$invalid" class="help-block">
+							<p ng-show="issueForm.content.$error.required" class="text-danger">Content is required if you want to submit a comment</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Submit comment" class="btn btn-success">
+					</div>
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</section>

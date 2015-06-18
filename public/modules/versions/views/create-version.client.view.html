@@ -1,0 +1,67 @@
+<section data-ng-controller="VersionsController" data-ng-init="getSubjects()">
+	<div class="page-header">
+		<h1>New Version</h1>
+	</div>
+	<pre>{{ subjectId }} : {{ description }}</pre>
+	<pre>{{ versionJason }}</pre>
+	<div class="col-md-12">
+		<form name="versionForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-6">
+						<div ng-class="{ 'has-error': projectForm.subject.$dirty && projectForm.subject.$invalid }">
+							<label class="control-label" for="subject">Subject</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjects" name="component" id="subject" data-ng-model="subject" class="form-control" placeholder="Select a subject" required>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-2">
+						<label class="control-label" for="versionId">Version ID</label>
+						<div class="controls">
+							<input name="versionId" type="text" data-ng-model="versionId" id="versionId" class="form-control" placeholder="Version ID" required>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="effective">Effective Date</label>
+						<div class="controls">
+							<input name="effective" type="date" data-ng-model="effective" id="effective" class="form-control" placeholder="YYYY-MM-DD" required>
+						</div>
+						<span class="error" ng-show="myForm.input.$error.required">
+					         Required!
+					     </span>
+					     <span class="error" ng-show="myForm.input.$error.date">
+					         Not a valid date!
+					     </span>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="status">Status</label>
+						<div class="controls">
+							<select name="status" data-ng-model="status" id="status" class="form-control" required>
+								<option value="active">Active</option>
+								<option value="inactive">Inactive</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-12">
+						<label class="control-label" for="versionJson">Version JSON String</label>
+						<div class="controls">
+							<textarea name="versionJson" data-ng-model="versionJson" id="versionJson" class="form-control" rows="3" placeholder="Paste version JSON string here"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default" value="Save">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>

@@ -1,0 +1,89 @@
+<section data-ng-controller="SubjectsController">
+	<div class="page-header">
+		<h1>New Subject</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="subjectForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-6">
+						<div ng-class="{ 'has-error': subjectForm.name.$dirty && subjectForm.name.$invalid }">
+							<label class="control-label" for="name">Name</label>
+							<div class="controls">
+								<input name="name" type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div ng-class="{ 'has-error': projectForm.subjectType.$dirty && projectForm.subjectType.$invalid }">
+							<label class="control-label" for="subjectType">Type</label>
+							<div class="controls">
+								<select name="subjectType" data-ng-model="subjectType" id="subjectType" class="form-control" required>
+									<option value="1">Equity-linked Transactions</option>
+									<option value="2">Variable Interest Entity</option>
+									<option value="3">Revenue Recognition</option>
+									<option value="4">Freestanding Derivatives</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-12">
+						<label class="control-label" for="description">Description</label>
+						<div class="controls">
+							<textarea name="description" data-ng-model="description" id="description" class="form-control" cols="30" rows="3" placeholder="Description"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-2">
+						<label class="control-label" for="subjectCode">Subject Code #</label>
+						<div class="controls">
+							<input name="subjectCode" type="text" data-ng-model="subjectCode" id="subjectCode" class="form-control" placeholder="Subject code #" required>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="prefix">Subject Prefix</label>
+						<div class="controls">
+							<input name="prefix" type="text" data-ng-model="prefix" id="prefix" class="form-control" placeholder="Subject prefix" required>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="subjectStartNode">Subject Start Node ID</label>
+						<div class="controls">
+							<input name="subjectStartNode" type="text" data-ng-model="subjectStartNode" id="subjectStartNode" class="form-control" placeholder="Subject start node ID" required>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-2">
+						<label class="control-label" for="status">Status</label>
+						<div class="controls">
+							<select name="status" data-ng-model="status" id="status" class="form-control" required>
+								<option value="active">Active</option>
+								<option value="inactive">Inactive</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="status">Testing Status</label>
+						<div class="controls">
+							<select name="status" data-ng-model="testStatus" id="status" class="form-control" required>
+								<option value="development">Development</option>
+								<option value="beta">Beta</option>
+								<option value="live">Live</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default" value="Save">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>

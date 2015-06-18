@@ -1,0 +1,67 @@
+<div class="row form-group">
+	<div class="col-md-12">
+		<div ng-class="{ 'has-error': questionForm.question.$dirty && questionForm.question.$invalid }">
+			<label class="control-label" for="question">Node content</label>
+			<div class="controls">
+				<textarea name="question" data-ng-model="question.question" id="question" class="form-control" cols="30" rows="5" placeholder="Node content" required></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-group form-group-sm">
+	<div class="col-md-2">
+		<label class="control-label" for="failResponse">Fail Response</label>
+		<div class="controls">
+			<input type="text" name="failResponse" data-ng-model="question.failResponse" id="failResponse" class="form-control" placeholder="Decision node ID" required>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<label class="control-label" for="decisionNodIde">Decision Node ID</label>
+		<div class="controls">
+			<input type="text" name="decisionNodeId" data-ng-model="question.decisionNodeId" id="decisionNodeId" class="form-control" placeholder="Decision node ID" required>
+		</div>
+	</div>
+</div>
+<!--
+<div class="row form-group form-group-sm">
+	<div class="col-md-3">
+		<label class="control-label" for="response_1">Response 1</label>
+		<div class="controls">
+			<input name="response_1" data-ng-model="question.response_1" id="response_1" class="form-control" placeholder="Response 1">
+		</div>
+	</div>
+	<div class="col-md-1">
+		<label class="control-label" for="target_1">Target 1</label>
+		<div class="controls">
+			<input name="target_1" data-ng-model="question.target_1" id="target_1" class="form-control" placeholder="Target 1">
+		</div>
+	</div>
+</div>
+<div class="row form-group form-group-sm">
+	<div class="col-md-3">
+		<label class="control-label" for="response_2">Response 2</label>
+		<div class="controls">
+			<input name="response_2" data-ng-model="question.response_2" id="response_2" class="form-control" placeholder="Response 2">
+		</div>
+	</div>
+	<div class="col-md-1">
+		<label class="control-label" for="target_2">Target 2</label>
+		<div class="controls">
+			<input name="target_2" data-ng-model="question.target_2" id="target_2" class="form-control" placeholder="Target 2">
+		</div>
+	</div>
+</div>
+<div class="row form-group form-group-sm">
+	<div class="col-md-3">
+		<label class="control-label" for="response_3">Response 3</label>
+		<div class="controls">
+			<input name="response_3" data-ng-model="question.response_3" id="response_3" class="form-control" placeholder="Response 3">
+		</div>
+	</div>
+	<div class="col-md-1">
+		<label class="control-label" for="target_3">Target 3</label>
+		<div class="controls">
+			<input name="target_3" data-ng-model="question.target_3" id="target_3" class="form-control" placeholder="Target 3">
+		</div>
+	</div>
+</div>

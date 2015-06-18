@@ -1,0 +1,89 @@
+<section data-ng-controller="QuestionsController" data-ng-init="find()">
+	<div class="page-header">
+		<h1>Nodes</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div>
+				<label class="control-label" for="projectType">Filter Node Type</label>
+				<div class="controls">
+					<select name="projectType" data-ng-model="projectType" id="projectType" class="form-control" ng-change="filterList()">
+						<option value="all" data-ng-selected="all">All</option>
+						<option value="1">Equity-Linked Transactions</option>
+						<option value="2">Variable Interest Entity Consolidation Model</option>
+						<option value="3">Revenue Recognition</option>
+						<option value="4">Freestanding Derivatives</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<form name="questionForm" class="form-horizontal" data-ng-submit="searchOne()" novalidate>
+				<fieldset>
+					<div class="row form-group form-group-sm">
+						<div class="col-md-4">
+							<div ng-class="{ 'has-error': questionForm.nodeId.$dirty && questionForm.nodeId.$invalid }">
+								<label class="control-label" for="nodeId">Search by Node ID</label>
+								<div class="controls">
+									<input name="nodeId" data-ng-model="nodeId" id="nodeId" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2" style="margin-top: 24px">
+							<div>
+								<div class="row text-center">
+									<input type="submit" class="btn btn-default" value="Search">
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<a class="button-btn" href="/#!/questions/create">Add a new node</a>
+		</div>
+		<!--
+		<div class="col-md-3">
+			<button class="btn btn-default" data-ng-click="assignType()">Add Project Type to Questions</button>
+		</div>
+		-->
+		<!--
+		<div class="col-md-3">
+			<button class="btn btn-default" data-ng-click="cleanCollection()">Clean Database</button>
+		</div>
+		-->
+	</div>
+	<div class="list-group">
+		<a data-ng-repeat="question in questions" data-ng-href="#!/questions/{{question._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="question.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="question.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading">Node ID: {{ question.questionId }}</h4>
+			<p class="list-group-item-text">Node system ID: {{ question._id }}</p>
+			<p class="list-group-item-text">Node primary text: {{ question.question }}</p>
+			<div>
+				<span class="list-group-item-text">Response 1: {{ question.response_1 }}; </span>
+				<span class="list-group-item-text">Target 1: {{ question.target_1 }}</span>
+				<span class="list-group-item-text">Pass conclusion: {{ question.conclusion_1 }}</span>
+			</div>
+			<div>
+				<span class="list-group-item-text">Response 2: {{ question.response_2 }}; </span>
+				<span class="list-group-item-text">Target 2: {{ question.target_2 }}</span>
+				<span class="list-group-item-text">Fail conclusion: {{ question.conclusion_2 }}</span>
+			</div>
+			<div>
+				<span class="list-group-item-text">Response 3: {{ question.response_3 }}; </span>
+				<span class="list-group-item-text">Target 3: {{ question.target_3 }}</span>
+			</div>
+		</a>
+	</div>
+	<div class="alert alert-warning text-center" data-ng-if="questions.$resolved && !questions.length">
+		No questions yet, why don't you <a href="/#!/questions/create">create one</a>?
+	</div>
+</section>

@@ -1,0 +1,82 @@
+<section data-ng-controller="VersionsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1>Edit Version</h1>
+	</div>
+	<pre>{{ version.subject }}</pre>
+	<pre>{{ version.versionJson }}</pre>
+	<div class="col-md-12">
+		<form name="versionForm" class="form-horizontal" data-ng-submit="update(versionForm.$valid)" novalidate>
+			<fieldset>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-6">
+						<div ng-class="{ 'has-error': projectForm.subject.$dirty && projectForm.subject.$invalid }">
+							<label class="control-label" for="subject">Subject</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjects" name="subject" id="subject" data-ng-model="version.subject" class="form-control" placeholder="Select a subject" required>
+								</select>
+							</div>
+							<div ng-show="submitted && versionForm.subjectId.$invalid" class="help-block">
+								<p ng-show="versionForm.subjectId.$error.required" class="text-danger">Subject is required</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label class="control-label" for="description">Description</label>
+						<div class="controls">
+							<textarea name="description" data-ng-model="version.description" id="description" class="form-control" cols="30" rows="3" readonly="true"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-2">
+						<label class="control-label" for="versionId">Version ID</label>
+						<div class="controls">
+							<input name="versionId" type="text" data-ng-model="version.versionId" id="versionId" class="form-control" placeholder="Version ID" required>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="versionCode">Version Code</label>
+						<div class="controls">
+							<input name="versionCode" type="text" data-ng-model="version.versionCode" id="versionCode" class="form-control" readonly="true">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="effective">Effective Date</label>
+						<div class="controls">
+							<input name="effective" type="date" data-ng-model="version.effective" id="effective" class="form-control" placeholder="YYYY-MM-DD" required>
+						</div>
+						<span class="error" ng-show="myForm.input.$error.required">
+					         Required!
+					     </span>
+					     <span class="error" ng-show="myForm.input.$error.date">
+					         Not a valid date!
+					     </span>
+					</div>
+					<div class="col-md-2">
+						<label class="control-label" for="status">Status</label>
+						<div class="controls">
+							<select name="status" data-ng-model="version.status" id="status" class="form-control" required>
+								<option value="active">Active</option>
+								<option value="inactive">Inactive</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-12">
+						<label class="control-label" for="versionJson">Version JSON String</label>
+						<div class="controls">
+							<textarea name="versionJson" data-ng-model="version.versionJson" id="versionJson" class="form-control" rows="3" placeholder="Paste version JSON string here"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Update" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>

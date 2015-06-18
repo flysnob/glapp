@@ -1,0 +1,25 @@
+<div class="col-md-12">
+	<div class="row">
+		<div>
+			<h5>Module Summary</h5>
+		</div>
+	</div>
+	<div class="row alert alert-info" role="alert" style="margin-top: 10px" ng-bind-html="content.summary"></div>
+
+	<div class="row" data-ng-show="showContinueButton">
+		<form name="responseForm" class="form-horizontal" data-ng-submit="nextQuestion(content.response)" novalidate>
+			<fieldset>
+				<div class="form-group" style="margin-left: 2px;">
+					<input data-ng-click="continue()" class="btn btn-default" value="Continue">
+				</div>
+				<div class="form-group">
+					<input type="hidden" ng-model="type" value="binary"a>
+					<input type="hidden" data-ng-bind="content.nodeId" value="{{ content.nodeId }}"a>
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,10 @@
+<div>
+    <input ng-model="newItem" />
+    <button ng-click="items.push(newItem);">push!</button>
+    <button ng-click="items = [];">clear</button>
+    <new-window ng-repeat="code in  items">{{code}} <input ng-model="code" /></new-window>
+    <div ng-repeat="code in items">{{code}}</div>
+    <hr />
+    <new-window>{{code}} <input ng-model="code" /></new-window>
+    <div>{{code}} <input ng-model="code" /></div>
+</div>

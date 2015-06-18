@@ -1,0 +1,51 @@
+<div class="col-md-12">
+	<div class="col-md-6">
+		<div style="margin-left: -17px;">
+			<h5>Accounting Recommendation</h5>
+		</div>
+		<div class="row">
+			<div data-ng-bind="content.question" class="alert alert-success" style="margin-left: -3px;"></div>
+		</div>
+		<div class="row">
+			<form name="responseForm" class="form-horizontal" data-ng-submit="nextQuestion(answer)" novalidate>
+				<fieldset>
+					<div class="form-group">
+						<div class="col-md-12">
+							<div>
+								<label class="control-label" for="comment">Comment</label>
+								<div text-angular="" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],['indent', 'outdent']]" data-ng-model="content.comment" id="comment" placeholder="Use this space to enter comments, notes and/or excerpts from the agreement(s) regarding your response to this intermediate conclusion."></div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left: 2px;">
+						<input type="submit" class="btn btn-default" value="Save">
+					</div>
+					<div class="form-group">
+						<input type="hidden" ng-model="type" value="binary"a>
+						<input type="hidden" data-ng-bind="content.nodeId" value="{{ content.nodeId }}"a>
+					</div>
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<div class="col-md-6" data-ng-show="content.showSummary">
+		<div style="margin-left: 0px;">
+			<h5>Node Summary</h5>
+		</div>
+		<div class="alert alert-info" ng-bind-html="content.summary"></div>
+		<div class="col-md-12" data-ng-show="content.showInfo" style="margin-left: -15px;">
+			<h5>Click for additional information about this question</h5>
+		</div>
+		<div class="col-md-12 btn-group" role="group" aria-label="..." data-ng-show="content.showInfo">
+			<button data-ng-show="content.showHelp" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="help">Help</button>
+			<button data-ng-show="content.showFaq" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="faq">FAQ</button>
+			<button data-ng-show="content.showAsc" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="asc">ASC</button>
+			<button data-ng-show="content.showExamples" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="examples">Examples</button>
+		</div>
+		<div data-ng-show="content.showText" class="col-md-12 alert alert-info" role="alert" style="margin-top: 10px" ng-bind-html="content.text"></div>
+		</div>
+	</div>
+</div>

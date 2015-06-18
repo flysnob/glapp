@@ -1,0 +1,66 @@
+<section data-ng-controller="HomeController" data-ng-init="getLists()">
+	<div class="jumbotron text-center">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+				<img alt="GAAPLOGIC" class="img-responsive text-center" width="500px" src="modules/core/img/brand/GAAPLOGIC grey.png" />
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<p class="lead">
+				A smart decision application for complex accounting issues
+			</p>
+		</div>
+		<div class="row">
+			<p>
+				<a class="btn btn-primary btn-lg" href="http://gaaplogic.com" target="_blank">Learn more</a>
+			</p>
+		</div>
+	</div>
+	<div>
+		<p>
+			GAAP Logic is a very smart decision application that helps you figure out some of the most complex accounting guidance ever conceived. We believe that the application of accounting rules should not be the private domain of very expensive accounting firms and subject matter experts. Application of GAAP is usually a methodical decision process that lends itself to decision analysis. GAAP Logic is just that, a decision analysis application designed to get you to the right answer while saving you time and money.
+		</p>
+	</div>
+	<div class="well">
+		<h2>Live Modules</h2>
+		<p>
+			These modules have been thoroughly tested for adherance to proper decision logic for each subject area. Module content, such has Help, FAQ and Examples, will undergo continuous enhancement as we receive feedback from users.
+			<div class="list-group">
+				<a data-ng-repeat="subject in subjectsLive" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item">
+					<h5 class="list-group-item-text" data-ng-bind="subject.name"></h5>
+					<p class="list-group-item-text" data-ng-bind="subject.description"></p>
+
+				</a>
+			</div>
+		</p>
+	</div>
+	<div class="well">
+		<h2>Modules in Beta</h2>
+		<p>
+			These modules are ready for user testing and but are probably still writing content. We would greatly appreciate your help with testing! Please use these modules for current projects, or old projects that you think will really challenge the application, and give us your feedback and advice <a href="http://apps.gaaplogic.com/#!/issues" target="_blank">here</a>.
+			<div class="list-group">
+				<a data-ng-repeat="subject in subjectsBeta" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item">
+					<h5 class="list-group-item-text" data-ng-bind="subject.name"></h5>
+					<p class="list-group-item-text" data-ng-bind="subject.description"></p>
+
+				</a>
+			</div>
+		</p>
+	</div>
+	<div class="well">
+		<h2>Modules in Development</h2>
+		<p>
+			These modules are still in development and internal testing. This means we are immersed in accounting guidance analyzing and developing the nodes and decision logic for the subject. As soon as these modules have been thoroughly tested by our internal team, we will release them to beta for user testing.</a>.
+			<div class="list-group">
+				<a data-ng-repeat="subject in subjectsDev" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item">
+					<h5 class="list-group-item-text" data-ng-bind="subject.name"></h5>
+					<p class="list-group-item-text" data-ng-bind="subject.description"></p>
+
+				</a>
+			</div>
+		</p>
+	</div>
+	<br>Enjoy &amp; Keep Us Updated,
+	<br>The GAAP Logic Team
+</section>

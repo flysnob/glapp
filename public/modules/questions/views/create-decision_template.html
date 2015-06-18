@@ -1,0 +1,54 @@
+<div class="row form-group">
+	<div class="col-md-12">
+		<div ng-class="{ 'has-error': questionForm.question.$dirty && questionForm.question.$invalid }">
+			<label class="control-label" for="question">Decision Description (will not appear in the UI)</label>
+			<div class="controls">
+				<textarea name="question" data-ng-model="question.question" id="question" class="form-control" cols="30" rows="5" placeholder="Question" required></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-group form-group-sm">
+<!--
+	<div class="col-md-2">
+		<label class="control-label" for="response_1">Response 1</label>
+		<div class="controls">
+			<input name="response_1" data-ng-model="question.response_1" id="response_1" class="form-control" value="Pass">
+		</div>
+	</div>
+	<div class="col-md-1">
+		<label class="control-label" for="target_1">Target 1</label>
+		<div class="controls">
+			<input name="target_1" data-ng-model="question.target_1" id="target_1" class="form-control" placeholder="Target 1">
+		</div>
+	</div>
+-->
+	<div class="col-md-6">
+		<label class="control-label" for="conclusion_1">Pass Conclusion Text</label>
+		<div class="controls">
+			<textarea name="conclusion_1" data-ng-model="question.conclusion_1" id="conclusion_1" class="form-control" cols="30" rows="5" placeholder="Pass conclusion text" required></textarea>
+		</div>
+	</div>
+</div>
+<div class="row form-group form-group-sm">
+<!--
+	<div class="col-md-2">
+		<label class="control-label" for="response_2">Response 2</label>
+		<div class="controls">
+			<input name="response_2" data-ng-model="question.response_2" id="response_2" class="form-control" value="Fail">
+		</div>
+	</div>
+	<div class="col-md-1">
+		<label class="control-label" for="target_2">Target 2</label>
+		<div class="controls">
+			<input name="target_2" data-ng-model="question.target_2" id="target_2" class="form-control" placeholder="Target 2">
+		</div>
+	</div>
+-->
+	<div class="col-md-6">
+		<label class="control-label" for="conclusion_2">Fail Conclusion Text</label>
+		<div class="controls">
+			<textarea name="conclusion_2" data-ng-model="question.conclusion_2" id="conclusion_2" class="form-control" cols="30" rows="5" placeholder="Fail conclusion text" required></textarea>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,67 @@
+<div class="col-md-12">
+	<div class="col-md-6">
+		<div style="margin-left: -17px;">
+			<h5>Question</h5>
+		</div>
+		<div class="row">
+			<div data-ng-bind="content.question" class="alert alert-success" style="margin-left: -5px;"></div>
+		</div>
+		<div class="row">
+			<form name="responseForm" class="form-horizontal" data-ng-submit="nextQuestion(content.response)" novalidate>
+				<fieldset>
+					<div class="form-group" style="margin-left: 25px;">
+						<div data-ng-show="content.show_1">
+							<label class="radio-inline">
+								<input name="response_1" id="response_1" type="radio" ng-model="content.response" value="1" required>{{ content.response_1 }}
+							</label>
+						</div>
+						<div data-ng-show="content.show_2">
+							<label class="radio-inline">
+								<input name="response_2" id="response_2" type="radio" ng-model="content.response" value="2" required>{{ content.response_2 }}
+							</label>
+						</div>
+						<div data-ng-show="content.show_3">
+							<label class="radio-inline">
+								<input name="response_3" id="response_3" type="radio" ng-model="content.response" value="3" required>{{ content.response_3 }}
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div>
+								<label class="control-label" for="comment">Comment</label>
+								<div text-angular="" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],['indent', 'outdent']]" data-ng-model="content.comment" id="comment" placeholder="Use this space to enter comments, notes and/or excerpts from the agreement(s) regarding your response to this intermediate conclusion."></div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left: 2px;">
+						<input type="submit" class="btn btn-default" value="Save">
+					</div>
+					<div class="form-group">
+						<input type="hidden" ng-model="type" value="binary"a>
+						<input type="hidden" data-ng-bind="content.nodeId" value="{{ content.nodeId }}"a>
+					</div>
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<div class="col-md-6" data-ng-show="content.showSummary">
+		<div style="margin-left: 0px;">
+			<h5>Node Summary</h5>
+		</div>
+		<div class="alert alert-info" ng-bind-html="content.summary"></div>
+		<div class="col-md-12" data-ng-show="content.showInfo" style="margin-left: -15px;">
+			<h5>Click for additional information about this question</h5>
+		</div>
+		<div class="col-md-12 btn-group" role="group" aria-label="..." data-ng-show="content.showInfo">
+			<button data-ng-show="content.showHelp" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="help">Help</button>
+			<button data-ng-show="content.showFaq" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="faq">FAQ</button>
+			<button data-ng-show="content.showAsc" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="asc">ASC</button>
+			<button data-ng-show="content.showExamples" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="examples">Examples</button>
+		</div>
+		<div data-ng-show="content.showText" class="col-md-12 alert alert-info" role="alert" style="margin-top: 10px" ng-bind-html="content.text"></div>
+	</div>
+</div>

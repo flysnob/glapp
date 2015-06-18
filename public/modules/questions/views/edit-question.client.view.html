@@ -1,0 +1,97 @@
+<section data-ng-controller="QuestionsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1>Edit Node: {{ question.questionId }}</h1>
+	</div>
+	<pre>Type: {{ question.type }}; Saved subject: {{ question.subject }}; Selected subject: {{ question.subject }}</pre>
+	<div class="col-md-12">
+		<form name="questionForm" class="form-horizontal" data-ng-submit="update(questionForm.$valid)" novalidate>
+			<fieldset>
+				<div class="row form-group form-group-sm">
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.questionId.$dirty && questionForm.questionId.$invalid }">
+							<label class="control-label" for="questionId">Node ID</label>
+							<div class="controls">
+								<input name="questionId" data-ng-model="question.questionId" id="questionId" class="form-control" placeholder="Node ID" width="90%" required>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.type.$dirty && questionForm.type.$invalid }">
+							<label class="control-label" for="type">Node Type</label>
+							<div class="controls">
+								<select name="type" data-ng-model="question.type" id="type" class="form-control" ng-change="changeEdit()" required>
+									<option value="q">Question</option>
+									<option value="d">Decision</option>
+									<option value="r">Recommendation</option>
+									<option value="i">Information</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div ng-class="{ 'has-error': questionForm.subject.$dirty && questionForm.subject.$invalid }">
+							<label class="control-label" for="subject">Subject</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjects" name="subject" id="subject" data-ng-model="question.subject" class="form-control" placeholder="Select a subject" required>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-include="template.url"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<label class="control-label" for="summary">Summary for UI</label>
+							<div text-angular="" data-ng-model="question.summary" id="summary"></div>
+						</div>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<label class="control-label" for="reportSummary">Summary for Report</label>
+							<div text-angular="" data-ng-model="question.reportSummary" id="reportSummary"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<label class="control-label" for="help">Help</label>
+							<div text-angular="" data-ng-model="question.help" id="help"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<label class="control-label" for="faq">FAQ</label>
+							<div text-angular="" data-ng-model="question.faq" id="faq"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="control-label" for="asc">ASC</label>
+						<div text-angular="" data-ng-model="question.asc" id="asc"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<label class="control-label" for="examples">Examples</label>
+							<div text-angular="" data-ng-model="question.examples" id="examples"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row text-center">
+					<input type="submit" value="Update" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>

@@ -1,0 +1,29 @@
+<section data-ng-controller="IssuesController" data-ng-init="find()">
+	<div class="page-header">
+		<h1>Issues</h1>
+	</div>
+	<div class="btn-group" role="group" aria-label="...">
+	  	<a class="btn btn-success" href="/#!/issues/create">New issue</a>
+	  	<a class="btn btn-default" href="#" ng-click="filter('all')" id="all">All issues</a>
+	  	<a class="btn btn-default" href="#" ng-click="filter('my')" id="my">My issues</a>
+	  	<a class="btn btn-default" href="#" ng-click="filter('open')" id="open">Open issues</a>
+	  	<a class="btn btn-default" href="#" ng-click="filter('closed')" id="closed">Closed issues</a>
+	</div>
+	<div class="list-group">
+		<a data-ng-repeat="issue in issues" data-ng-href="#!/issues/{{issue._id}}" class="list-group-item">
+			<h4 class="list-group-item-heading" data-ng-bind="issue.title"></h4>
+			<small class="list-group-item-text">
+				Opened
+				<span data-ng-bind="issue.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="issue.user.username"></span>
+				<span data-ng-show="issue.status === 'closed'">
+					<span class="label label-danger">Closed</span>
+				</span>
+			</small>
+		</a>
+	</div>
+	<div class="alert alert-warning text-center" data-ng-if="issues.$resolved && !issues.length">
+		No issues yet, why don't you <a href="/#!/issues/create">create one</a>?
+	</div>
+</section>
