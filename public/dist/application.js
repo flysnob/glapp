@@ -752,7 +752,17 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 	  	$scope.getSubjects = function() {
 	  		Subjects.query(function(subjects){
 				subjects = $scope.order(subjects, '-name', true);
-				$scope.subjects = subjects;
+				
+				var subjectsObj = [];
+
+				angular.forEach(subjects, function(subject, key){
+					if (subject.testStatus === 'live' || subject.testStatus === 'beta') {
+						if (subject.testStatus === 'beta') subject.name = subject.name += ' (beta)';
+						subjectsObj.push(subject);
+					}
+				});
+				$scope.subjects = subjectsObj;
+				console.log($scope.subjects);
 			});
 	  	};
 
