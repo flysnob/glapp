@@ -268,8 +268,11 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 					}
 				});
 				$scope.subjectsLive = subjectsLiveObj;
+				$scope.showLive = $scope.subjectsLive.length > 0 ? true : false;
 				$scope.subjectsBeta = subjectsBetaObj;
+				$scope.showBeta = $scope.subjectsBeta.length > 0 ? true : false;
 				$scope.subjectsDev = subjectsDevObj;
+				$scope.showDev = $scope.subjectsDev.length > 0 ? true : false;
 				console.log($scope.subjectsLive);
 				console.log($scope.subjectsBeta);
 				console.log($scope.subjectsDev);
