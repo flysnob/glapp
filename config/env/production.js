@@ -21,7 +21,8 @@ module.exports = {
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-				'public/lib/textAngular/dist/textAngular-rangy.min.js'
+				'public/lib/textAngular/dist/textAngular-rangy.min.js',
+				'public/lib/angular-google-analytics/dist/angular-google-analytics.min.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

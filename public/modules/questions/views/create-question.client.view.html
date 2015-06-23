@@ -2,7 +2,6 @@
 	<div class="page-header">
 		<h1>New Node</h1>
 	</div>
-	<pre>{{ question.questionId }}; {{ type }}; {{ question.question }}; {{ question.summary }}; {{ question.response_1 }}; {{ question.target_1 }}</pre>
 	<div class="col-md-12">
 		<form name="questionForm" class="form-horizontal" data-ng-submit="create(question)" novalidate>
 			<fieldset>
@@ -33,6 +32,26 @@
 							<label class="control-label" for="subject">Subject</label>
 							<div class="controls">
 								<select data-ng-options="name for (name, value) in subjects" name="subject" id="subject" data-ng-model="subject" class="form-control" data-ng-change="filterVersions()" placeholder="Select a subject" required>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm" data-ng-show="showVersions">
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.firstVersion.$dirty && questionForm.firstVersion.$invalid }">
+							<label class="control-label" for="firstVersion">First Version</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjectVersions" name="firstVersion" id="firstVersion" data-ng-model="firstVersion" class="form-control" placeholder="Select a version" required>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.lastVersion.$dirty && questionForm.lastVersion.$invalid }">
+							<label class="control-label" for="lastVersion">Last Version</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjectVersions" name="lastVersion" id="lastVersion" data-ng-model="lastVersion" class="form-control" placeholder="Select a version">
 								</select>
 							</div>
 						</div>

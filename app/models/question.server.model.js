@@ -94,6 +94,16 @@ var QuestionSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	firstVersion: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	lastVersion: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

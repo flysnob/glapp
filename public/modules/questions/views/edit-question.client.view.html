@@ -2,7 +2,6 @@
 	<div class="page-header">
 		<h1>Edit Node: {{ question.questionId }}</h1>
 	</div>
-	<pre>Type: {{ question.type }}; Saved subject: {{ question.subject }}; Selected subject: {{ question.subject }}</pre>
 	<div class="col-md-12">
 		<form name="questionForm" class="form-horizontal" data-ng-submit="update(questionForm.$valid)" novalidate>
 			<fieldset>
@@ -32,7 +31,45 @@
 						<div ng-class="{ 'has-error': questionForm.subject.$dirty && questionForm.subject.$invalid }">
 							<label class="control-label" for="subject">Subject</label>
 							<div class="controls">
-								<select data-ng-options="name for (name, value) in subjects" name="subject" id="subject" data-ng-model="question.subject" class="form-control" placeholder="Select a subject" required>
+								<select data-ng-options="name for (name, value) in subjects" name="subject" id="subject" data-ng-model="question.subject" class="form-control" data-ng-change="filterVersions()" placeholder="Select a subject" required>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm" data-ng-hide="showVersions">
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.firstVersion.$dirty && questionForm.firstVersion.$invalid }">
+							<label class="control-label" for="firstVersion">First Version</label>
+							<div class="controls">
+								<input name="firstVersion" id="firstVersion" data-ng-model="question.firstVersion" class="form-control" readonly="readonly">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.lastVersion.$dirty && questionForm.lastVersion.$invalid }">
+							<label class="control-label" for="lastVersion">Last Version</label>
+							<div class="controls">
+								<input name="lastVersion" id="lastVersion" data-ng-model="question.lastVersion" class="form-control" readonly="readonly">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm" data-ng-show="showVersions">
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.firstVersion.$dirty && questionForm.firstVersion.$invalid }">
+							<label class="control-label" for="firstVersion">First Version</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjectVersions" name="firstVersion" id="firstVersion" data-ng-model="question.firstVersion" class="form-control" placeholder="Select a version" required>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div ng-class="{ 'has-error': questionForm.lastVersion.$dirty && questionForm.lastVersion.$invalid }">
+							<label class="control-label" for="lastVersion">Last Version</label>
+							<div class="controls">
+								<select data-ng-options="name for (name, value) in subjectVersions" name="lastVersion" id="lastVersion" data-ng-model="question.lastVersion" class="form-control" placeholder="Select a version">
 								</select>
 							</div>
 						</div>

@@ -759,7 +759,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				var subjectsObj = [];
 
 				angular.forEach(subjects, function(subject, key){
-					if (subject.testStatus === 'live' || subject.testStatus === 'beta') {
+					if (subject.status === 'active' && (subject.testStatus === 'live' || subject.testStatus === 'beta')) {
 						if (subject.testStatus === 'beta') subject.name = subject.name += ' (beta)';
 						subjectsObj.push(subject);
 					}
@@ -961,8 +961,8 @@ angular.module('questions').config(['$stateProvider',
 'use strict';
 
 // Questions controller
-angular.module('questions').controller('QuestionsController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Questions', '$templateCache', 'Subjects', 'Issues',
-	function($scope, $stateParams, $location, $filter, Authentication, Questions, $templateCache, Subjects, Issues) {
+angular.module('questions').controller('QuestionsController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Questions', '$templateCache', 'Subjects', 'Issues', 'Versions',
+	function($scope, $stateParams, $location, $filter, Authentication, Questions, $templateCache, Subjects, Issues, Versions) {
 		$scope.authentication = Authentication;
 
 		var orderBy = $filter('orderBy');
@@ -1027,6 +1027,13 @@ angular.module('questions').controller('QuestionsController', ['$scope', '$state
 	  		console.log($scope.template);
 	  	};
 
+	  	$scope.getVersions = function() {
+	  		Versions.query(function(versions){
+				versions = $scope.order(versions, '-description', true);
+				$scope.versions = versions;
+			});
+	  	};
+
 	  	$scope.getSubjects = function() {
 	  		var subjectsObj = {};
 
@@ -1041,7 +1048,38 @@ angular.module('questions').controller('QuestionsController', ['$scope', '$state
 	  	};
 
 	  	$scope.getLists = function() {
+	  		$scope.getVersions();
 	  		$scope.getSubjects();
+
+	  		$scope.showVersions = false;
+	  	};
+
+	  	$scope.filterVersions = function() {
+	  		console.log($scope.subjects);
+	  		console.log($scope.versions);
+
+	  		var subject = typeof $scope.question !== 'undefined' ? $scope.question.subject : $scope.subject;
+
+	  		if (typeof $scope.question !== 'undefined') {
+	  			$scope.question.firstVersion = '';
+	  			$scope.question.lastVersion = '';
+	  		}
+
+	  		console.log(subject);
+
+	  		var versions = {};
+
+	  		angular.forEach($scope.versions, function(version, key){
+				if (subject === version.subject) {
+					versions[version.description] = version.versionId;
+				}
+			});
+
+			$scope.subjectVersions = versions;
+
+			console.log($scope.subjectVersions);
+
+			$scope.showVersions = true;
 	  	};
 
 	  	$scope.templates = [

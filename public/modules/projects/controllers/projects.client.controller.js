@@ -37,7 +37,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				var subjectsObj = [];
 
 				angular.forEach(subjects, function(subject, key){
-					if (subject.testStatus === 'live' || subject.testStatus === 'beta') {
+					if (subject.status === 'active' && (subject.testStatus === 'live' || subject.testStatus === 'beta')) {
 						if (subject.testStatus === 'beta') subject.name = subject.name += ' (beta)';
 						subjectsObj.push(subject);
 					}
