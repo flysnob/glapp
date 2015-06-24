@@ -73,8 +73,12 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 			$scope.subjectVersions = versions;
 
 			$scope.showFilteredVersions = true;
+
+			console.log(subject);
+
+			$scope.subject = subject;
 			
-			$scope.showDescription = $scope.subject.description !== '' ? true : false;
+			$scope.showDescription = subject.description !== '' ? true : false;
 	  	};
 
 		$scope.types = [

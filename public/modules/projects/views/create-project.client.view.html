@@ -41,7 +41,7 @@
 					</div>
 					<div class="col-md-3" data-ng-show="showFilteredVersions">
 						<div ng-class="{ 'has-error': projectForm.version.$dirty && projectForm.version.$invalid }">
-							<label class="control-label" for="version">Versions</label>
+							<label class="control-label" for="version">Version</label>
 							<div class="controls">
 								<select data-ng-options="version.description for version in subjectVersions track by version._id" name="version" id="version" data-ng-model="version" class="form-control" placeholder="Select a version" required>
 								</select>

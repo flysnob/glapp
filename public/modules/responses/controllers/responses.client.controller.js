@@ -167,6 +167,12 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				if (typeof breadcrumb.answer !== 'undefined') lastTarget = breadcrumb.answer.targetValue;
 			});
 
+			console.log($scope.current);
+			console.log(priorAnswer);
+			console.log(thisBreadcrumb);
+			console.log(lastTarget);
+			console.log($scope.content);
+
 			if (typeof priorAnswer !== 'undefined' && priorAnswer !== response) {
 				
 				// answer has changed (and possibly the comment) so update the db
@@ -248,6 +254,8 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 		$scope.saveNode = function(response) {
 			// generate the next target node
+
+			console.log($scope.content);
 
 			var currentAnswer = {questionId: $scope.content.questionId, question: $scope.content.question, summary: $scope.content.summary, comment: $scope.content.comment, response: $scope.response.response, responseValue: $scope.content[$scope.response.response], target: $scope.response.target, targetValue: $scope.content[$scope.response.target], conclusion: $scope.response.conclusion, conclusionValue: $scope.content[$scope.response.conclusion]};
 
@@ -371,7 +379,10 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						$scope.resetShows();
 
 					} else if ($scope.content.type === 'd') { // or terminate
-
+						$scope.template = $scope.templates[1];
+						$scope.sequence++; // increment sequencer
+						$scope.current = $scope.sequence;
+						$scope.content.response = false; // reset radios
 						$scope.decisionNode(target);
 						/*
 						var nextTarget = $scope.decisionNode(target);
@@ -490,7 +501,6 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						$scope.sequence = Number(lastCrumb.sequence) + 1; // increment sequencer
 						$scope.current = $scope.sequence;
 						$scope.content.response = false; // reset radios
-						$scope.showReportButton = true;
 
 						breadcrumb = {};
 						breadcrumb.sequence = $scope.sequence;
@@ -503,26 +513,12 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						$scope.resetShows();
 
 					} else if ($scope.content.type === 'd') {
+						
 						$scope.template = $scope.templates[1];
-						
-						console.log($scope.breadcrumbs);
-						$scope.decisionNode(target);
-						/*
-						var nextTarget = $scope.decisionNode(target);
-						console.log(nextTarget);
-						*/
-						
-						$scope.sequence++; // increment sequencer
+						$scope.sequence = Number(lastCrumb.sequence) + 1; // increment sequencer
 						$scope.current = $scope.sequence;
 						$scope.content.response = false; // reset radios
-
-						breadcrumb = {};
-						breadcrumb.sequence = $scope.sequence;
-						breadcrumb.questionId = $scope.content.questionId;
-						breadcrumb.question = $scope.content.question;
-						breadcrumb.summary = $scope.content.summary;
-						breadcrumb.type = $scope.content.type;
-						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
+						$scope.decisionNode(target);
 
 						$scope.resetShows();
 					}
@@ -569,7 +565,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						break;
 					case 'd':
 						$scope.template = $scope.templates[1];
-						$scope.conclusion = $scope.content[$scope.breadcrumbs[sequence - 1].answer.conclusion];
+						//$scope.conclusion = $scope.content[$scope.breadcrumbs[sequence - 1].answer.conclusion];
 						break;
 					case 'r':
 						$scope.template = $scope.templates[2];
@@ -676,7 +672,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 					console.log(conclusion);
 
-					$scope.conclusion =  conclusion;
+					$scope.conclusion = conclusion;
 					
 					$scope.showConclusions = true;
 
@@ -689,11 +685,6 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 					console.log($scope.conclusion);
 					console.log(nextAnswer);
 
-					$scope.content.response = false; // reset radios
-
-					$scope.sequence++; // increment sequencer
-					$scope.current = $scope.sequence;
-
 					var breadcrumb = {};
 					breadcrumb.sequence = $scope.sequence;
 					breadcrumb.questionId = $scope.content.questionId;
@@ -704,7 +695,9 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 					$scope.resetShows();
 					
-					$scope.nextQuestion(nextAnswer);
+					$scope.content.response = nextAnswer;
+
+					console.log($scope.content.response);
 				});
 			});
 		};
@@ -825,7 +818,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						comment = breadcrumb.comment;
 					}
 					$scope.html += '<div>' +
-						'<h5><strong>Intermediate conclusion (Node #' + breadcrumb.sequence + '): </strong>' + breadcrumb.question + '</h5>' + 
+						'<h5><strong>Intermediate conclusion (Node #' + breadcrumb.sequence + ')' + 
 						'<ul><li><strong>Question summary: </strong>' + breadcrumb.summary + '</li>' + 
 						'<li><strong>Response: </strong>' + breadcrumb.saved.answer.conclusionValue + '</li>' + // need to either update response answer or query the question and use that in case responseValue has changed since the response was saved. This is only needed for decision nodes since question nodes I THINK
 						'<li><strong>Comments: </strong>' + comment + '</li></ul></div>';
@@ -837,8 +830,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 					}
 					$scope.html += '<div>' +
 						'<div style="border: solid lightblue 1px; padding: 5px;"><h4><strong>Accounting recommendation (Node #' + breadcrumb.sequence + '): </strong>' + breadcrumb.question + '</h4>' + 
-						'<h5><strong>Recommendation summary: </strong>' + breadcrumb.summary + '</h5></div>' + 
-						'<li><strong>Comments: </strong>' + comment + '</li>' + 
+						'<li><strong>Comments: </strong>' + comment + '</li></div>' + 
 						'<br /></div>';
 				}
 			});

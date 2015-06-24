@@ -36,7 +36,7 @@ var ResponseSchema = new Schema({
 		default: '',
 	},
 	sequence: {
-		type: String,
+		type: Number,
 		default: ''
 	},
 	comment: {
