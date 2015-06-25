@@ -2,18 +2,20 @@
 	<div class="row">
 		<div class="col-md-10">
 			<h4>Project Title: {{ project.title }}</h4>
-			<small>
-				<em class="text-muted">
-					Project ID 
-					<span data-ng-bind="project._id"></span>
-					created on
-					<span data-ng-bind="project.created | date:'mediumDate'"></span>
-					by
-					<span data-ng-bind="project.user.displayName"></span>
-					-- Module:  
-					<span data-ng-bind="project.version.description"></span>
-				</em>
-			</small>
+			<div style="margin-top: -10px">
+				<small>
+					<em class="text-muted">
+						Project ID 
+						<span data-ng-bind="project._id"></span>
+						created on
+						<span data-ng-bind="project.created | date:'mediumDate'"></span>
+						by
+						<span data-ng-bind="project.user.displayName"></span>
+						-- Module:  
+						<span data-ng-bind="project.version.description"></span>
+					</em>
+				</small>
+			</div>
 		</div>
 		<div class="col-md-2">
 			<div class="form-group" data-ng-show="showReportButton" style="margin-left: 2px;">
@@ -22,20 +24,20 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12" style="margin-top: 5px">
 			<h3 class="panel-title">Project Nodes</h3>
 		</div>
-		<div class="col-md-12">
+		<div class="col-md-12" style="margin-top: -10px">
 			<nav>
 				<ul class="pagination pagination-sm">
-					<li data-ng-repeat="breadcrumb in breadcrumbs"><a id="{{ breadcrumb.sequence }}" data-ng-click="showNode(breadcrumb.sequence)" title="Click to display Node {{ breadcrumb.sequence }}: {{ breadcrumb.question }}" data-ng-bind="breadcrumb.sequence"></a></li>
+					<li data-ng-repeat="breadcrumb in breadcrumbs"><a id="{{ breadcrumb.sequence }}" data-ng-click="showNode(breadcrumb.sequence)" title="Click to display Index {{ breadcrumb.sequence }}: {{ breadcrumb.question }}" data-ng-bind="breadcrumb.sequence"></a></li>
 				</lu>
 			</nav>
 		</div>
 	</div>
-	<div class="page-header">
-		<h2>Node {{ current }}</h2>
-		<h4>ID: {{ content.questionId }}</h4>
+	<div class="page-header" style="margin-top: -40px">
+		<h2>Index: {{ current }}</h2>
+		<h4>Node ID: {{ content.questionId }}</h4>
 	</div>
 	<div ng-include="template.url"></div>
 </section>
