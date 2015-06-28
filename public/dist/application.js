@@ -56,6 +56,11 @@ ApplicationConfiguration.registerModule('issues');
 'use strict';
 
 // Use Application configuration module to register a new module
+ApplicationConfiguration.registerModule('pages');
+
+'use strict';
+
+// Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('projects');
 
 'use strict';
@@ -677,6 +682,126 @@ angular.module('issues').factory('Issues', ['$resource',
 	function($resource) {
 		return $resource('issues/:issueId', {
 			issueId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+'use strict';
+
+// Configuring the Pages module
+angular.module('pages').run(['Menus',
+	function(Menus) {
+		// Set top bar menu items
+		// Menus.addMenuItem('topbar', 'Pages', 'pages', 'dropdown', '/pages(/create)?');
+		// Menus.addSubMenuItem('topbar', 'pages', 'List Pages', 'pages');
+		// Menus.addSubMenuItem('topbar', 'pages', 'New Page', 'pages/create');
+	}
+]);
+'use strict';
+
+// Setting up route
+angular.module('pages').config(['$stateProvider',
+	function($stateProvider) {
+		// Pages state routing
+		$stateProvider.
+		state('listPages', {
+			url: '/pages',
+			templateUrl: 'modules/pages/views/list-pages.client.view.html'
+		}).
+		state('createPage', {
+			url: '/pages/create',
+			templateUrl: 'modules/pages/views/create-page.client.view.html'
+		}).
+		/*state('viewPage', {
+			url: '/pages/:pageId',
+			templateUrl: 'modules/pages/views/view-page.client.view.html'
+		}).*/
+		state('viewPage', {
+			url: '/pages/:pageId',
+			templateUrl: 'modules/pages/views/view-page.client.view.html'
+		}).
+		state('editPage', {
+			url: '/pages/:pageId/edit',
+			templateUrl: 'modules/pages/views/edit-page.client.view.html'
+		});
+	}
+]);
+'use strict';
+
+angular.module('pages').controller('PagesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Pages',
+	function($scope, $stateParams, $location, Authentication, Pages) {
+		$scope.authentication = Authentication;
+
+		$scope.create = function() {
+			var page = new Pages({
+				title: this.title,
+				content: this.content,
+				url: this.url
+			});
+			page.$save(function(response) {
+				$location.path('pages/' + page.url);
+
+				$scope.title = '';
+				$scope.content = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.remove = function(page) {
+			if (page) {
+				page.$remove();
+
+				for (var i in $scope.pages) {
+					if ($scope.pages[i] === page) {
+						$scope.pages.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.page.$remove(function() {
+					$location.path('pages');
+				});
+			}
+		};
+
+		$scope.update = function() {
+			console.log($scope.page);
+			var page = $scope.page;
+
+			page.$update(function() {
+				$location.path('pages/' + page.url);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.find = function() {
+			$scope.pages = Pages.query();
+		};
+
+		$scope.findOne = function() {
+			console.log($stateParams.pageId);
+			Pages.get({
+				pageId: $stateParams.pageId
+			}).$promise.then(function(page){
+			
+				console.log(page);
+				$scope.page = page;
+
+			});
+		};
+	}
+]);
+'use strict';
+
+//Pages service used for communicating with the pages REST endpoints
+angular.module('pages').factory('Pages', ['$resource',
+	function($resource) {
+		return $resource('pages/:pageId', {
+			pageId: '@url'
 		}, {
 			update: {
 				method: 'PUT'

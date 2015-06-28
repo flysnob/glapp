@@ -18,7 +18,7 @@
 						</div>
 					</div>
 					<div class="form-group" style="margin-left: 2px;" data-ng-hide="saveComment">
-						<input type="submit" class="btn btn-default" value="Continue">
+						<input type="submit" class="btn btn-default" value="Save and Continue">
 					</div>
 					<div class="form-group" style="margin-left: 2px;" data-ng-show="saveComment">
 						<input type="submit" class="btn btn-default" value="Save">
@@ -45,6 +45,6 @@
 			<button data-ng-show="content.showAsc" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="asc">ASC</button>
 			<button data-ng-show="content.showExamples" type="button" class="btn btn-info btn-sm" data-ng-click="showText($event)" id="examples">Examples</button>
 		</div>
-		<div data-ng-show="content.showText" class="col-md-12 alert alert-info" role="alert" style="margin-top: 10px"ng-bind-html="content.text"></div>
+		<div data-ng-show="content.showText" class="col-md-12 alert alert-info" role="alert" style="margin-top: 10px" ng-bind-html="content.text"></div>
 	</div>
 </div>

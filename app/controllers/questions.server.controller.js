@@ -30,6 +30,8 @@ exports.create = function(req, res) {
  * Show the current question
  */
 exports.read = function(req, res) {
+	console.log(req);
+	console.log(res);
 	res.json(req.question);
 };
 

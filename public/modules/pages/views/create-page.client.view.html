@@ -1,0 +1,39 @@
+<section data-ng-controller="PagesController">
+	<div class="page-header">
+		<h1>New Page</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="pageForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="row form-group form-group-sm">
+					<div ng-class="{ 'has-error': pageForm.title.$dirty && pageForm.title.$invalid }">
+						<label class="control-label" for="title">Title</label>
+						<div class="controls">
+							<input name="title" type="text" data-ng-model="title" id="title" class="form-control" placeholder="Title" required>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group form-group-sm">
+					<div ng-class="{ 'has-error': pageForm.url.$dirty && pageForm.url.$invalid }">
+						<label class="control-label" for="url">URL</label>
+						<div class="controls">
+							<input name="url" type="text" data-ng-model="url" id="url" class="form-control" placeholder="URL" required>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="control-label" for="content">Main Content</label>
+						<div text-angular="" data-ng-model="content" id="content"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
