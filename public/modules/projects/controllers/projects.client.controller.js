@@ -119,6 +119,14 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		// Remove existing Project
 		$scope.remove = function(project) {
 			if (project) {
+				Responses.query(function(responses){
+					angular.forEach(responses, function(response, key){
+						if (response.projectId === project._id) {
+							response.$remove();
+						}
+					});
+				});
+
 				project.$remove();
 
 				for (var i in $scope.projects) {
@@ -126,10 +134,19 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 						$scope.projects.splice(i, 1);
 					}
 				}
+
 			} else {
-				$scope.project.$remove(function() {
-					$location.path('projects');
-				});
+				Responses.query(function(responses){
+					angular.forEach(responses, function(response, key){
+						if (response.projectId === $scope.project._id) {
+							response.$remove();
+						}
+					});
+				}).$promise.then(function(){
+					$scope.project.$remove(function() {
+						$location.path('projects');
+					});
+				})
 			}
 		};
 
