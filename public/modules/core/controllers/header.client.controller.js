@@ -3,8 +3,6 @@
 angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus',
 	function($scope, Authentication, Menus) {
 		$scope.authentication = Authentication;
-		$scope.isCollapsed = false;
-		$scope.menu = Menus.getMenu('topbar');
 
 		$scope.admin = false;
 
@@ -13,6 +11,8 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 			if (role === 'admin'){
 				$scope.admin = true;
 			}
+			$scope.isCollapsed = false;
+			$scope.menu = Menus.getMenu('topbar');
 		});
 
 		$scope.toggleCollapsibleMenu = function() {

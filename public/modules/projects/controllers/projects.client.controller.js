@@ -146,7 +146,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 					$scope.project.$remove(function() {
 						$location.path('projects');
 					});
-				})
+				});
 			}
 		};
 
