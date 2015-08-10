@@ -14,6 +14,7 @@
     "angular-ui-utils": "~0.1.1",
     "angular-ui-router": "~0.2.11",
     "textAngular": "~1.4.1",
-    "angular-google-analytics": "~0.0.15"
+    "angular-google-analytics": "~0.0.15",
+    "angular-recaptcha": "~2.2.4"
   }
 }

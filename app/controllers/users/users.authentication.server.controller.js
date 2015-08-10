@@ -7,7 +7,31 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	request = require('request');
+
+/**
+ * Validate Recaptha
+ */
+exports.recaptcha = function(req, res) {
+	// Validate recaptcha
+	var url = 'https://www.google.com/recaptcha/api/siteverify';
+	var secret = '6LfTogoTAAAAAAOeHKCZk68Nx9xcxN2okouIVk_s';
+	var key = req.body.response;
+	console.log(req.body.response);
+
+	request(url + '?secret=' + secret + '&response=' + key, function(err, response, body) {
+        console.log(err);
+        console.log(response);
+        console.log(body);
+        var data = '';
+        if (err) {
+        	return res.json(err);
+        } else {
+        	return res.json(body);
+        }
+	});
+};
 
 /**
  * Signup

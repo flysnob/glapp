@@ -22,7 +22,8 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular-rangy.min.js',
-				'public/lib/angular-google-analytics/dist/angular-google-analytics.min.js'
+				'public/lib/angular-google-analytics/dist/angular-google-analytics.min.js',
+				'public/lib/angular-recaptcha/release/angular-recaptcha.js'
 			]
 		},
 		css: 'public/dist/application.min.css',
