@@ -20,6 +20,10 @@ angular.module('versions').config(['$stateProvider',
 		state('editVersion', {
 			url: '/versions/:versionId/edit',
 			templateUrl: 'modules/versions/views/edit-version.client.view.html'
+		}).
+		state('testVersion', {
+			url: '/versions/:versionId/test',
+			templateUrl: 'modules/versions/views/test-version.client.view.html'
 		});
 	}
 ]);

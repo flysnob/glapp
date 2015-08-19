@@ -111,10 +111,10 @@ exports.versionByID = function(req, res, next, id) {
  * Version authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.version.user.id !== req.user.id) {
+	/*if (req.version.user.id !== req.user.id) {
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});
-	}
+	}*/
 	next();
 };

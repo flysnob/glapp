@@ -48,6 +48,10 @@ var VersionSchema = new Schema({
 		default: '',
 		required: 'Version JSON required.'
 	},
+	testJson: {
+		type: Schema.Types.Mixed,
+		default: ''
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('versions').controller('VersionsController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Versions', 'Subjects',
-	function($scope, $stateParams, $location, $filter, Authentication, Versions, Subjects) {
+angular.module('versions').controller('VersionsController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Versions', 'Subjects', '$q',
+	function($scope, $stateParams, $location, $filter, Authentication, Versions, Subjects, $q) {
 		$scope.authentication = Authentication;
 
 		var orderBy = $filter('orderBy');
@@ -127,6 +127,79 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 
 				$scope.getSubjects();
 			});
+		};
+
+		$scope.test = function() {
+			var jsonString = $scope.version;
+			console.log(jsonString);
+
+			$scope.versionJson = angular.fromJson($scope.version.versionJson);
+
+			$scope.initVisited();
+
+			$scope.buildObject();
+
+			// how does angular deal with promise/deferred?
+			var result = $scope.getNode($scope.versionJson[0].nodeId);
+
+			result.then(function(){
+				console.log($scope.visited);
+				var notVisted = 0;
+				angular.forEach($scope.visited, function(value, key) {
+					if (value === 0) {
+						notVisted++;
+					}
+				});
+				console.log(notVisted);
+			});
+		};
+
+		$scope.buildObject = function() {
+			$scope.object = {};
+			angular.forEach($scope.versionJson, function(node, key) {
+				$scope.object[node.nodeId] = {t1: node.target_1, t2: node.target_2, t3: node.target_3};
+			});
+			console.log($scope.object);
+		};
+
+		$scope.initVisited = function() {
+			$scope.visited = {};
+			angular.forEach($scope.versionJson, function(node, key) {
+				$scope.visited[node.nodeId] = 0;
+			});
+			console.log($scope.visited);
+
+		};
+
+		$scope.getNode = function(target, deferred) {
+			//console.log(target);
+			//console.log($scope.object[target]);
+			//console.log(angular.isObject($scope.object[target]));
+
+			console.log(deferred);
+
+			if (typeof deferred === 'undefined') {
+				var deferred = $q.defer();
+			}
+
+			if (angular.isObject($scope.object[target]) && $scope.visited[target] !== 1) {
+				$scope.visited[target] = 1;
+				angular.forEach($scope.object[target], function(t, k) {
+					if (t !== '') {
+						var def = $q.defer();
+						//console.log(k, t);
+						$scope.getNode(t, def);
+					}
+				});
+			} else {
+				$scope.visited[target] = 1;
+				deferred.resolve();
+				//console.log(deferred)
+            	return deferred.promise;
+			}
+
+			deferred.resolve();
+			return deferred.promise;
 		};
 	}
 ]);
