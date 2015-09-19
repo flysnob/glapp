@@ -191,7 +191,7 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 						$scope.getNode(t, def);
 					}
 				});
-			} else {
+			} else if ($scope.visited[target] !== 1) {
 				$scope.visited[target] = 1;
 				deferred.resolve();
 				//console.log(deferred)
