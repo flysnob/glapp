@@ -6,6 +6,15 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 
+		angular.forEach($scope.authentication.user.roles, function(role, key){
+			console.log(role);
+			if (role === 'admin'){
+				$scope.admin = true;
+			}
+		});
+
+		$scope.isCollapsed = false;
+
 		var orderBy = $filter('orderBy');
 
 		$scope.order = function(array, predicate, reverse) {

@@ -10,7 +10,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		if ($scope.authentication.user) $location.path('/');
 
 		$scope.signup = function() {
-			$http.post('/auth/signup', $scope.credentials).success(function(response) {
+			console.log('signup started');
+            $http.post('/auth/signup', $scope.credentials).success(function(response) {
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
 
@@ -32,7 +33,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$scope.error = response.message;
 			});
 		};
-
+        /*
 		$scope.model = {
             key: '6LfTogoTAAAAALwBT4dpOZSCtUO9dmLayA86yYMw'
         };
@@ -72,5 +73,6 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
                 vcRecaptchaService.reload($scope.widgetId);
 			});
         };
+        */
 	}
 ]);

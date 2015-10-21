@@ -219,14 +219,19 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 
 		$scope.admin = false;
 
+		console.log($scope.authentication);
+
 		angular.forEach($scope.authentication.user.roles, function(role, key){
 			console.log(role);
 			if (role === 'admin'){
 				$scope.admin = true;
 			}
-			$scope.isCollapsed = false;
-			$scope.menu = Menus.getMenu('topbar');
 		});
+
+		$scope.isCollapsed = false;
+		$scope.menu = Menus.getMenu('topbar');
+
+		console.log($scope.admin);
 
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
@@ -245,6 +250,15 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, Subjects, $filter) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
+
+		angular.forEach($scope.authentication.user.roles, function(role, key){
+			console.log(role);
+			if (role === 'admin'){
+				$scope.admin = true;
+			}
+		});
+
+		$scope.isCollapsed = false;
 
 		var orderBy = $filter('orderBy');
 
@@ -2719,7 +2733,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		if ($scope.authentication.user) $location.path('/');
 
 		$scope.signup = function() {
-			$http.post('/auth/signup', $scope.credentials).success(function(response) {
+			console.log('signup started');
+            $http.post('/auth/signup', $scope.credentials).success(function(response) {
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
 
@@ -2741,7 +2756,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$scope.error = response.message;
 			});
 		};
-
+        /*
 		$scope.model = {
             key: '6LfTogoTAAAAALwBT4dpOZSCtUO9dmLayA86yYMw'
         };
@@ -2781,6 +2796,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
                 vcRecaptchaService.reload($scope.widgetId);
 			});
         };
+        */
 	}
 ]);
 'use strict';
@@ -3157,7 +3173,7 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 						$scope.getNode(t, def);
 					}
 				});
-			} else {
+			} else if ($scope.visited[target] !== 1) {
 				$scope.visited[target] = 1;
 				deferred.resolve();
 				//console.log(deferred)
