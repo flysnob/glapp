@@ -91,7 +91,7 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 					if (issue.permission === 'user') issuesUser.push(issue);
 				});
 
-				$scope.issues = $scope.admin ? issues : issuesUser;
+				$scope.issues = issues;// $scope.admin ? issues : issuesUser;
 				console.log($scope.issues);
 				
 			});
