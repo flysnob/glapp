@@ -52,7 +52,7 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 			});
 			comment.$save(function(response) {
 				console.log(response);
-				$location.path('issues/' + $scope.issue._id);
+				window.location.reload();
 
 				$scope.commentContent = '';
 			}, function(errorResponse) {
