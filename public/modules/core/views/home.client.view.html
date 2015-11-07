@@ -8,12 +8,15 @@
 		<br>
 		<div class="row">
 			<p class="lead">
-				A smart decision app for complex accounting issues
+				A FREE(!!) smart decision app for complex accounting issues
 			</p>
 		</div>
 		<div class="row">
 			<p>
-				<a class="btn btn-primary btn-lg" href="/#!/projects/create" target="_blank">Start a Project!</a>
+				<a class="btn btn-primary btn-lg" href="/#!/projects/create" target="_blank" data-ng-show="authentication.user">Start a Project!</a>
+			</p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="/#!/projects/create" target="_blank" data-ng-hide="authentication.user" disabled title="Please login to start a project.">Start a Project!</a>
 			</p>
 		</div>
 	</div>
