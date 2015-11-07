@@ -38,11 +38,11 @@
 		<div>
 			These modules have been thoroughly tested for adherance to proper decision logic for each subject area. Module content, such has Help, FAQ and Examples, will undergo continuous enhancement as we receive feedback from users.
 			<div class="list-group" data-ng-show="showLive">
-				<a data-ng-repeat="subject in subjectsLive" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item">
+				<!-- <a data-ng-repeat="subject in subjectsLive" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item"> -->
 					<h5 class="list-group-item-text" data-ng-bind="subject.name"></h5>
 					<p class="list-group-item-text" data-ng-bind="subject.description"></p>
 
-				</a>
+				<!-- </a> -->
 			</div>
 			<div class="list-group" data-ng-hide="showLive">
 				<p class="list-group-item">No modules currently live.</p>
@@ -70,11 +70,11 @@
 		<div>
 			These modules are still in development and internal testing. This means we are immersed in accounting guidance analyzing and developing the nodes and decision logic for the subject. As soon as these modules have been thoroughly tested by our internal team, we will release them to beta for user testing.</a>.
 			<div class="list-group" data-ng-show="showDev">
-				<a data-ng-repeat="subject in subjectsDev" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item">
+				<!-- <a data-ng-repeat="subject in subjectsDev" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item"> -->
 					<h5 class="list-group-item-text" data-ng-bind="subject.name"></h5>
 					<p class="list-group-item-text" data-ng-bind="subject.description"></p>
 
-				</a>
+				<!-- </a> -->
 			</div>
 			<div class="list-group" data-ng-hide="showDev">
 				<p class="list-group-item">No modules currently in development.</p>
