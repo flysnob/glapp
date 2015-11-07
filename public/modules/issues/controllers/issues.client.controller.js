@@ -44,12 +44,14 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 		};
 
 		$scope.createComment = function() {
+			console.log($scope.issue._id);
 			var comment = new Comments({
 				title: $scope.issue.title,
 				content: $scope.commentContent,
-				issueId: $scope.issue._id
+				issue: $scope.issue._id
 			});
 			comment.$save(function(response) {
+				console.log(response);
 				$location.path('issues/' + $scope.issue._id);
 
 				$scope.commentContent = '';
@@ -108,7 +110,7 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 					$scope.update();
 				}
 
-				Comments.query(function(comments){ // filter based on selected issue
+				Comments.query(function(comments){ // filtered based on selected issue
 					var commentsObj = [];
 					comments = $scope.order(comments, '-created', true);
 					angular.forEach(comments, function(comment, key){	
