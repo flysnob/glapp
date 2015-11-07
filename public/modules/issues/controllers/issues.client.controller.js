@@ -110,6 +110,12 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 					$scope.update();
 				}
 
+				$scope.showClosed = false;
+
+				if ($scope.issue.status === 'closed') {
+					$scope.showClosed = true;					
+				};
+
 				Comments.query(function(comments){ // filtered based on selected issue
 					var commentsObj = [];
 					comments = $scope.order(comments, '-created', true);
@@ -124,6 +130,8 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 
 		$scope.close = function() {
 			$scope.issue.status = 'closed';
+			$scope.issue.closedBy = $scope.authentication.user.username;
+			$scope.issue.closedDate = new Date();;
 			$scope.update();
 		};
 

@@ -55,6 +55,14 @@ var IssueSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	closedDate: {
+		type: Date
+	},
+	closedBy: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
