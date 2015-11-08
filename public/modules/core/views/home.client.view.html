@@ -41,8 +41,8 @@
 				<div class="list-group">
 					<div class="list-group-item" data-ng-repeat="subject in subjectsLive">
 				<!-- <a data-ng-repeat="subject in subjectsLive" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item"> -->
-						<h5 class="panel panel-heading" data-ng-bind="subject.name"></h5>
-						<p class="panel panel-body" data-ng-bind="subject.description"></p>
+						<h5 data-ng-bind="subject.name"></h5>
+						<p data-ng-bind="subject.description"></p>
 					</div>
 				<!-- </a> -->
 				</div>
@@ -61,7 +61,7 @@
 					<div class="list-group-item" data-ng-repeat="subject in subjectsBeta">
 				<!-- <a data-ng-repeat="subject in subjectsBeta" target="_blank" href="http://gaaplogic.com/{{ subject.prefix }}" class="list-group-item"> -->
 						<h5 data-ng-bind="subject.name"></h5>
-						<p class="panel panel-body" data-ng-bind="subject.description"></p>
+						<p data-ng-bind="subject.description"></p>
 					</div>
 				<!-- </a> -->
 				</div>
