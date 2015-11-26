@@ -65,22 +65,9 @@
 				<span data-ng-bind="question.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading">Node ID: {{ question.questionId }}</h4>
+			<p class="list-group-item-text">Node type: {{ question.type }}</p>
 			<p class="list-group-item-text">Node system ID: {{ question._id }}</p>
 			<p class="list-group-item-text">Node primary text: {{ question.question }}</p>
-			<div>
-				<span class="list-group-item-text">Response 1: {{ question.response_1 }}; </span>
-				<span class="list-group-item-text">Target 1: {{ question.target_1 }}</span>
-				<span class="list-group-item-text">Pass conclusion: {{ question.conclusion_1 }}</span>
-			</div>
-			<div>
-				<span class="list-group-item-text">Response 2: {{ question.response_2 }}; </span>
-				<span class="list-group-item-text">Target 2: {{ question.target_2 }}</span>
-				<span class="list-group-item-text">Fail conclusion: {{ question.conclusion_2 }}</span>
-			</div>
-			<div>
-				<span class="list-group-item-text">Response 3: {{ question.response_3 }}; </span>
-				<span class="list-group-item-text">Target 3: {{ question.target_3 }}</span>
-			</div>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="questions.$resolved && !questions.length">
