@@ -60,6 +60,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						var nodes = [];
 						
 						angular.forEach($scope.responses, function(value, key){
+							console.log(value.projectId);
 							if (value.projectId === $scope.projectId){
 								nodes.push(value);	
 							}
@@ -136,6 +137,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			});
 		};
 
+		// loops over existing responses and populates the 
 		$scope.nextQuestion = function(response){
 
 			console.log(response);
