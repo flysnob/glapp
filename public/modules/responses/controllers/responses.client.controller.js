@@ -231,8 +231,6 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				// new answer so save it and generate the new node
 
 				$scope.saveNode(response); 
-
-				$scope.newNode(response);
 				
 			}
 		};
@@ -296,6 +294,8 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				console.log($scope.breadcrumbs);
 				$scope.breadcrumbs.pop(); // drop the temporary breadcrumb
 				$scope.breadcrumbs.push(breadcrumb); // add the persisted breadcrumb
+
+				$scope.newNode(response);
 
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
