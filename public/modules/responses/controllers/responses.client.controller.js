@@ -161,7 +161,12 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			var lastTarget;
 			var thisBreadcrumb;
 
+			console.log($scope.breadcrumbs);
+
 			angular.forEach($scope.breadcrumbs, function(breadcrumb, key){
+				console.log(breadcrumb.sequence);
+				console.log($scope.current);
+				console.log(breadcrumb.answer);
 				if (breadcrumb.sequence === $scope.current && typeof breadcrumb.answer !== 'undefined'){
 					priorAnswer = breadcrumb.answer.response.slice(-1);
 					thisBreadcrumb = breadcrumb;
@@ -170,6 +175,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			});
 
 			console.log($scope.current);
+			console.log(response);
 			console.log(priorAnswer);
 			console.log(thisBreadcrumb);
 			console.log(lastTarget);
