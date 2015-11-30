@@ -293,6 +293,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				breadcrumb.comment = typeof $scope.content.comment !== 'undefined' ? $scope.content.comment : '';
 				breadcrumb.type = $scope.content.type;
 				breadcrumb.answer = currentAnswer; // add node to breadcrumbs
+				console.log($scope.breadcrumbs);
 				$scope.breadcrumbs.pop(); // drop the temporary breadcrumb
 				$scope.breadcrumbs.push(breadcrumb); // add the persisted breadcrumb
 
