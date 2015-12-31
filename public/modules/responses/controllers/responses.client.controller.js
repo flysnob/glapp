@@ -60,7 +60,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						var nodes = [];
 						
 						angular.forEach($scope.responses, function(value, key){
-							console.log(value.projectId);
+							//console.log(value.projectId);
 							if (value.projectId === $scope.projectId){
 								nodes.push(value);	
 							}
@@ -86,7 +86,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 							$scope.template = $scope.templates[3];
 
-							console.log($scope.versionJson[0]);
+							//console.log($scope.versionJson[0]);
 
 							$scope.current = $scope.sequence;
 
@@ -111,6 +111,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 								breadcrumb.questionId = $scope.content.questionId;
 								breadcrumb.question = $scope.content.question;
 								breadcrumb.summary = $scope.content.summary;
+								breadcrumb.reportSummary = $scope.content.reportSummary;
 								breadcrumb.type = $scope.content.type;
 								$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 							});
@@ -133,6 +134,9 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 					$scope.content.target_1 = $scope.currentJson.target_1;
 					$scope.content.target_2 = $scope.currentJson.target_2;
 					$scope.content.target_3 = $scope.currentJson.target_3;
+					$scope.content.decisionNodeId = $scope.currentJson.decisionNodeId;
+					$scope.content.failResponse = $scope.currentJson.failResponse;
+					$scope.content.bool = $scope.currentJson.bool;
 				}
 			});
 		};
@@ -188,7 +192,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				thisBreadcrumb.comment = $scope.content.comment;
 				thisBreadcrumb.saved.comment = $scope.content.comment;
 
-				var currentAnswer = {questionId: $scope.content.questionId, question: $scope.content.question, summary: $scope.content.summary, comment: $scope.content.comment, response: $scope.response.response, responseValue: $scope.content[$scope.response.response], target: $scope.response.target, targetValue: $scope.content[$scope.response.target], conclusion: $scope.response.conclusion, conclusionValue: $scope.content[$scope.response.conclusion]};
+				var currentAnswer = {questionId: $scope.content.questionId, question: $scope.content.question, summary: $scope.content.summary, reportSummary: $scope.content.reportSummary, decisionNodeId: $scope.content.decisionNodeId, failResponse: $scope.content.failResponse, bool: $scope.content.bool, comment: $scope.content.comment, response: $scope.response.response, responseValue: $scope.content[$scope.response.response], target: $scope.response.target, targetValue: $scope.content[$scope.response.target], conclusion: $scope.response.conclusion, conclusionValue: $scope.content[$scope.response.conclusion]};
 
 				thisBreadcrumb.answer = currentAnswer;
 				thisBreadcrumb.saved.answer = currentAnswer;
@@ -220,6 +224,16 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				}).$promise.then(function(content){
 
 					$scope.content = content;
+
+					if ($scope.content.type === 'q') { // get the next question
+						$scope.template = $scope.templates[0];
+					} else if ($scope.content.type === 'r') { // or terminate
+						$scope.template = $scope.templates[2];
+					} else if ($scope.content.type === 'i') { // or terminate
+						$scope.template = $scope.templates[3];
+					} else if ($scope.content.type === 'd') { // or terminate
+						$scope.template = $scope.templates[1];
+					}
 
 					$scope.addJson(lastTarget);
 					//$scope.content = $scope.questions[lastTarget];
@@ -258,18 +272,23 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			$scope.newNode(thisBreadcrumb.answer.targetValue); // generate the new target node
 		};
 
-		$scope.saveNode = function(response) {
+		$scope.saveNode = function(resp) {
 			// generate the next target node
 
 			console.log($scope.content);
+			console.log($scope.content.decisionNodeId);
+			console.log($scope.content.failResponse);
 
-			var currentAnswer = {questionId: $scope.content.questionId, question: $scope.content.question, summary: $scope.content.summary, comment: $scope.content.comment, response: $scope.response.response, responseValue: $scope.content[$scope.response.response], target: $scope.response.target, targetValue: $scope.content[$scope.response.target], conclusion: $scope.response.conclusion, conclusionValue: $scope.content[$scope.response.conclusion]};
+			var currentAnswer = {questionId: $scope.content.questionId, question: $scope.content.question, summary: $scope.content.summary, reportSummary: $scope.content.reportSummary, decisionNodeId: $scope.content.decisionNodeId, failResponse: $scope.content.failResponse, bool: $scope.content.bool, comment: $scope.content.comment, response: $scope.response.response, responseValue: $scope.content[$scope.response.response], target: $scope.response.target, targetValue: $scope.content[$scope.response.target], conclusion: $scope.response.conclusion, conclusionValue: $scope.content[$scope.response.conclusion]};
 
 			var response = new Responses({ // save the last response
 				projectId: $scope.projectId,
 				type: $scope.content.type,
 				question: $scope.content.question,
 				questionId: $scope.content.questionId,
+				decisionNodeId: $scope.content.decisionNodeId,
+				failResponse: $scope.content.failResponse,
+				bool: $scope.content.bool,
 				answer: currentAnswer,
 				sequence: Number($scope.sequence),
 				comment: $scope.content.comment,
@@ -288,8 +307,12 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				breadcrumb.questionId = $scope.content.questionId;
 				breadcrumb.question = $scope.content.question;
 				breadcrumb.summary = $scope.content.summary;
+				breadcrumb.reportSummary = $scope.content.reportSummary;
 				breadcrumb.comment = typeof $scope.content.comment !== 'undefined' ? $scope.content.comment : '';
 				breadcrumb.type = $scope.content.type;
+				breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+				breadcrumb.failResponse = $scope.content.failResponse;
+				breadcrumb.bool = $scope.content.bool;
 				breadcrumb.answer = currentAnswer; // add node to breadcrumbs
 				console.log($scope.breadcrumbs);
 				$scope.breadcrumbs.pop(); // drop the temporary breadcrumb
@@ -341,7 +364,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 						console.log($scope.breadcrumbs);
 
@@ -361,7 +388,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 						console.log($scope.breadcrumbs);
 
@@ -381,7 +412,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 						console.log($scope.breadcrumbs);
 
@@ -425,8 +460,8 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			console.log($scope.nodes);
 
 			angular.forEach($scope.nodes, function(node, key){
-				console.log(node.sequence);
-				$scope.breadcrumbs.push({saved: node, sequence: Number(node.sequence), questionId: node.questionId, question: node.question, type: node.type, summary: node.answer.summary, comment: node.comment, answer: {questionId: node.answer.questionId, question: node.answer.question, response: node.answer.response, responseValue: node.answer.responseValue, target: node.answer.target, targetValue: node.answer.targetValue, conclusion: node.answer.conclusion, conclusionValue: node.answer.conclusionValue, comment: node.comment}});
+				//console.log(node.sequence);
+				$scope.breadcrumbs.push({saved: node, sequence: Number(node.sequence), questionId: node.questionId, question: node.question, type: node.type, summary: node.answer.summary, reportSummary: node.answer.reportSummary, decisionNodeId: node.answer.decisionNodeId, failResponse: node.answer.failResponse, bool: node.answer.bool, comment: node.comment, answer: {questionId: node.answer.questionId, question: node.answer.question, response: node.answer.response, responseValue: node.answer.responseValue, target: node.answer.target, targetValue: node.answer.targetValue, conclusion: node.answer.conclusion, conclusionValue: node.answer.conclusionValue, comment: node.comment}});
 				if (node.type === 'd') $scope.conclusions.push(node.conclusion);
 				target = node.answer.targetValue;
 				response = node.answer.response;
@@ -460,6 +495,8 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 				var breadcrumb = {};
 
+				console.log(target);
+
 				Questions.get({
 					questionId: target
 				}).$promise.then(function(content){
@@ -481,7 +518,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 
 						$scope.resetShows();
@@ -499,7 +540,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 
 						$scope.resetShows();
@@ -516,7 +561,11 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 						breadcrumb.questionId = $scope.content.questionId;
 						breadcrumb.question = $scope.content.question;
 						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
 						breadcrumb.type = $scope.content.type;
+						breadcrumb.decisionNodeId = $scope.content.decisionNodeId;
+						breadcrumb.failResponse = $scope.content.failResponse;
+						breadcrumb.bool = $scope.content.bool;
 						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 
 						$scope.resetShows();
@@ -638,13 +687,12 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 
 		$scope.decisionNode = function(target) {
 			
-
-			var pass = true;
 			var nextAnswer;
 			console.log(target);
 			console.log($scope.breadcrumbs);
 			var conclusion;
 			var fails = {};
+			var pass;
 
 			Questions.get({
 				questionId: target
@@ -653,27 +701,131 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 				$scope.content = content;
 
 				$scope.addJson(target);
+				console.log($scope.content);
 
-				Questions.query(function(questions){ // list of all questions in the db // let's trim this down with decisionNodeId filter
-					angular.forEach(questions, function(value, key){
+				// For backward compatibility, loop over questions to populate the fail object; otherwise, loop over breadcrumbs instead
+
+				console.log($scope.version.decisionMethod);
+
+				if (typeof $scope.version.decisionMethod === 'undefined' || $scope.version.decisionMethod === 'question') {
+
+					pass = true;
+
+					Questions.query(function(questions){ // list of all questions in the db // let's trim this down with decisionNodeId filter
+						angular.forEach(questions, function(value, key){
+							if (value.decisionNodeId === target) {
+								fails[value.questionId] = value.failResponse;
+							}
+						});
+
+						console.log(fails);
+
+						angular.forEach($scope.breadcrumbs, function(breadcrumb, b){
+							angular.forEach(fails, function(failResponse, failId){
+								console.log(pass);
+								if (pass === true && breadcrumb.questionId === failId && breadcrumb.answer.responseValue === failResponse && breadcrumb.answer.responseValue !== 'Not Applicable') pass = false;
+							});
+						});
+
+						console.log(pass);
+
+						console.log($scope.content);					
+
+						if (pass) {
+							conclusion = $scope.content.conclusion_1;
+						} else {
+							conclusion = $scope.content.conclusion_2;
+						}
+
+						console.log(conclusion);
+
+						$scope.conclusion = conclusion;
+						
+						$scope.showConclusions = true;
+
+						if (pass) {
+							nextAnswer = '1';
+						} else {
+							nextAnswer = '2';
+						}
+						
+						console.log($scope.conclusion);
+						console.log(nextAnswer);
+
+						var breadcrumb = {};
+						breadcrumb.sequence = $scope.sequence;
+						breadcrumb.questionId = $scope.content.questionId;
+						breadcrumb.question = $scope.content.question;
+						breadcrumb.summary = $scope.content.summary;
+						breadcrumb.reportSummary = $scope.content.reportSummary;
+						breadcrumb.type = $scope.content.type;
+						$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
+
+						$scope.resetShows();
+						
+						$scope.content.response = nextAnswer;
+
+						console.log($scope.content.response);
+
+					});
+				} else {
+
+					pass = '';
+
+					console.log($scope.content);
+					angular.forEach($scope.breadcrumbs, function(value, key){
+						console.log(value.decisionNodeId);
 						if (value.decisionNodeId === target) {
 							fails[value.questionId] = value.failResponse;
 						}
 					});
+
 					console.log(fails);
+
+					var responseArr = {};
 
 					angular.forEach($scope.breadcrumbs, function(breadcrumb, b){
 						angular.forEach(fails, function(failResponse, failId){
-							console.log(pass);
-							if (pass === true && breadcrumb.questionId === failId && breadcrumb.answer.responseValue === failResponse) pass = false;
+							switch ($scope.content.bool) {
+								case 'or':
+									// test only if true (i.e., not false) which forces 'or' condition since a single false can make the entire thing false
+									if (pass !== false && breadcrumb.questionId === failId && breadcrumb.answer.responseValue !== 'Not Applicable' && breadcrumb.answer.responseValue === failResponse) {
+										pass = false;
+										responseArr[breadcrumb.questionId] = breadcrumb.answer.responseValue;
+										console.log(pass);
+									}
+									break;
+								case 'and':
+									// must fail all nodes so if it passes one (i.e., one is true) then it passes (i.e., pass === true)
+									// so test only if not already true; one true makes pass true (i.e., one true makes pass not false)
+									// so we only need to test the continued falsey state of pass otherwise it's true or ''
+									if (pass !== true && breadcrumb.questionId === failId && breadcrumb.answer.responseValue !== 'Not Applicable' && breadcrumb.answer.responseValue === failResponse) {
+										pass = false;
+										responseArr[breadcrumb.questionId] = breadcrumb.answer.responseValue;
+										console.log(pass);
+									} else {
+										pass = true;
+									}
+									break;
+								default:
+									// default to or
+									if (pass !== false && breadcrumb.questionId === failId && breadcrumb.answer.responseValue !== 'Not Applicable' && breadcrumb.answer.responseValue === failResponse) {
+										pass = false;
+										responseArr[breadcrumb.questionId] = breadcrumb.answer.responseValue;
+										console.log(pass);
+									}
+									break;
+							}
 						});
 					});
+
+					console.log(responseArr);
 
 					console.log(pass);
 
 					console.log($scope.content);					
 
-					if (pass) {
+					if (pass || pass === '') {
 						conclusion = $scope.content.conclusion_1;
 					} else {
 						conclusion = $scope.content.conclusion_2;
@@ -699,6 +851,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 					breadcrumb.questionId = $scope.content.questionId;
 					breadcrumb.question = $scope.content.question;
 					breadcrumb.summary = $scope.content.summary;
+					breadcrumb.reportSummary = $scope.content.reportSummary;
 					breadcrumb.type = $scope.content.type;
 					$scope.breadcrumbs.push(breadcrumb); // add temporary breadcrumb
 
@@ -707,7 +860,7 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 					$scope.content.response = nextAnswer;
 
 					console.log($scope.content.response);
-				});
+				}
 			});
 		};
 
@@ -791,55 +944,72 @@ angular.module('responses').controller('ResponsesController', ['$scope', '$state
 			$scope.html += '<div>' +
 				'<h3>' +
 					'Project Title: ' + $scope.project.title +
-				'</h4>' +
-				'<h4>' +
+				'</h5>' +
+				'<h5>' +
 					'Project ID: ' + $scope.project._id +
-				'</h4>' +
-				'<h4>' +
+				'</h5>' +
+				'<h5>' +
 					'Project Description: ' + $scope.project.description +
-				'</h4>' +
-				'<h4>' +
+				'</h5>' +
+				'<h5>' +
 					'Created on: ' + $scope.project.created +
-				'</h4>' +
-				'<h4>' +
+				'</h5>' +
+				'<h5>' +
 					'Created by: ' + $scope.project.user.displayName +
-				'</h4>' +
+				'</h5>' +
 			'</div>';
 
         	angular.forEach($scope.breadcrumbs, function(breadcrumb, key){
         		console.log(breadcrumb);
         		var comment;
         		if (breadcrumb.type === 'q' && typeof breadcrumb.saved !== 'undefined'){
-					if (breadcrumb.comment === '' || typeof breadcrumb.comment === 'undefined'){
-						comment = 'none';
+					if (typeof breadcrumb.comment !== 'undefined' && breadcrumb.comment !== ''){
+						comment = '<li><strong>Comments: </strong>' + breadcrumb.comment + '</li></div>';
 					} else {
-						comment = breadcrumb.comment;
+						comment = '';
 					}
-					$scope.html += '<div>' +
-						'<h5><strong>Question (Node #' + breadcrumb.sequence + '): </strong>' + breadcrumb.question + '</h5>' + 
-						'<ul><li><strong>Question summary: </strong>' + breadcrumb.summary + '</li>' + 
-						'<li><strong>Response: </strong>' + breadcrumb.saved.answer.responseValue + '</li>' +  
-						'<li><strong>Comments: </strong>' + comment + '</li></ul></div>';
+					$scope.html += 
+						'<div>' +
+						'<p><strong>Question #' + breadcrumb.sequence + ': </strong>' + breadcrumb.question + '</p>' + 
+						'<ul>' + 
+						//'<li><strong>Question summary: </strong>' + typeof breadcrumb.reportSummary !== 'undefined' && breadcrumb.reportSummary !== '' ? breadcrumb.reportSummary : breadcrumb.summary + '</li>' + 
+						'<li><strong>Response: </strong><p>' + breadcrumb.saved.answer.responseValue + '</p></li>' +  
+						comment +
+						'</ul>' + 
+						'</div>';
+				} else if (breadcrumb.type === 'i' && typeof breadcrumb.saved !== 'undefined'){
+					$scope.html += 
+						'<div>' +
+						'<strong>Analysis summary (Node #' + breadcrumb.sequence + ')' + '</strong>' +
+						'<p>' +
+						(typeof breadcrumb.reportSummary !== 'undefined' && breadcrumb.reportSummary !== '' ? breadcrumb.reportSummary : breadcrumb.summary) + 
+						'</p>' +
+						'</div>';
 				} else if (breadcrumb.type === 'd' && typeof breadcrumb.saved !== 'undefined'){
-					if (breadcrumb.comment === '' || typeof breadcrumb.comment === 'undefined'){
-						comment = 'none';
+					if (typeof breadcrumb.comment !== 'undefined' && breadcrumb.comment !== ''){
+						comment = '<li><strong>Comments: </strong>' + breadcrumb.comment + '</li></div>';
 					} else {
-						comment = breadcrumb.comment;
+						comment = '';
 					}
-					$scope.html += '<div>' +
-						'<h5><strong>Intermediate conclusion (Node #' + breadcrumb.sequence + ')' + 
-						'<ul><li><strong>Question summary: </strong>' + breadcrumb.summary + '</li>' + 
-						'<li><strong>Response: </strong>' + breadcrumb.saved.answer.conclusionValue + '</li>' + // need to either update response answer or query the question and use that in case responseValue has changed since the response was saved. This is only needed for decision nodes since question nodes I THINK
-						'<li><strong>Comments: </strong>' + comment + '</li></ul></div>';
+					$scope.html += 
+						'<div>' +
+						'<p><strong>Intermediate conclusion (Node #' + breadcrumb.sequence + ')' + '</strong></p>' +
+						'<ul>' + 
+						'<li><strong>Question summary: </strong>' + typeof breadcrumb.reportSummary !== 'undefined' && breadcrumb.reportSummary !== '' ? breadcrumb.reportSummary : breadcrumb.summary + '</li>' + 
+						'<li><strong>Response: </strong><p>' + breadcrumb.saved.answer.conclusionValue + '</p></li>' + // need to either update response answer or query the question and use that in case responseValue has changed since the response was saved. This is only needed for decision nodes since question nodes I THINK
+						comment +
+						'</ul>' + 
+						'</div>';
 				} else if (breadcrumb.type === 'r'){
-					if (breadcrumb.comment === '' || typeof breadcrumb.comment === 'undefined'){
-						comment = 'none';
+					if (typeof breadcrumb.comment !== 'undefined' && breadcrumb.comment !== ''){
+						comment = '<li><strong>Comments: </strong>' + breadcrumb.comment + '</li></div>';
 					} else {
-						comment = breadcrumb.comment;
+						comment = '';
 					}
-					$scope.html += '<div>' +
-						'<div style="border: solid lightblue 1px; padding: 5px;"><h4><strong>Accounting recommendation (Node #' + breadcrumb.sequence + '): </strong>' + breadcrumb.question + '</h4>' + 
-						'<li><strong>Comments: </strong>' + comment + '</li></div>' + 
+					$scope.html += 
+						'<div>' +
+						'<div style="border: solid lightblue 1px; padding: 5px;"><h4><strong>Accounting recommendation: </strong><br><br>' + breadcrumb.question + '</h4>' + 
+						comment + 
 						'<br /></div>';
 				}
 			});

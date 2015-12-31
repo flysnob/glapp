@@ -217,6 +217,7 @@ angular.module('questions').controller('QuestionsController', ['$scope', '$state
 
 		// Find a list of Questions
 		$scope.find = function() {
+			$scope.getLists();
 			Questions.query(function(questions){
 				$scope.questions = $scope.order(questions, '-sort', true);
 

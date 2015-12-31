@@ -66,7 +66,12 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 	  		angular.forEach($scope.versions, function(version, key){
 				if (subject.subjectCode === version.subject) {
-					versions.push(version);
+					if (version.status === 'active') {
+						versions.push(version);
+					} else if (version.status === 'inactive' && $scope.admin) {
+						versions.push(version);
+					}
+					
 				}
 			});
 

@@ -48,6 +48,7 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 				versionId: this.versionId,
 				effective: this.effective,
 				status: this.status,
+				decisionMethod: this.decisionMethod,
 				versionCode: code,
 				versionJson: angular.fromJson(this.versionJson)
 			});
@@ -59,6 +60,7 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 				$scope.versionId = '';
 				$scope.effective = '';
 				$scope.status = '';
+				$scope.decisionMethod = '';
 				$scope.versionCode = '';
 				$scope.versionJson = '';
 			}, function(errorResponse) {
@@ -179,7 +181,7 @@ angular.module('versions').controller('VersionsController', ['$scope', '$statePa
 			console.log(deferred);
 
 			if (typeof deferred === 'undefined') {
-				var deferred = $q.defer();
+				deferred = $q.defer();
 			}
 
 			if (angular.isObject($scope.object[target]) && $scope.visited[target] !== 1) {

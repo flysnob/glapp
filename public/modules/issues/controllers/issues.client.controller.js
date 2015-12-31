@@ -114,7 +114,7 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 
 				if ($scope.issue.status === 'closed') {
 					$scope.showClosed = true;					
-				};
+				}
 
 				Comments.query(function(comments){ // filtered based on selected issue
 					var commentsObj = [];
@@ -131,7 +131,7 @@ angular.module('issues').controller('IssuesController', ['$scope', '$stateParams
 		$scope.close = function() {
 			$scope.issue.status = 'closed';
 			$scope.issue.closedBy = $scope.authentication.user.username;
-			$scope.issue.closedDate = new Date();;
+			$scope.issue.closedDate = new Date();
 			$scope.update();
 		};
 

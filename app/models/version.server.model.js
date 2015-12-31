@@ -43,6 +43,11 @@ var VersionSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	decisionMethod: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	versionJson: {
 		type: Schema.Types.Mixed,
 		default: '',
